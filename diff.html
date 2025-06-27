@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulário - Programa Mais Leite Saudável</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #006400;
+    }
+    .question {
+      margin: 15px 0;
+    }
+    .result {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.2em;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .fail {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      background-color: #006400;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d00;
+    }
+  </style>
+</head>
+<body>
+  <h1>Programa Mais Leite Saudável</h1>
+  <p>Responda as perguntas abaixo para saber se sua empresa está apta a pleitear o benefício fiscal.</p>
+
+  <form id="checklistForm">
+    <div class="question">
+      1. A empresa está regularmente cadastrada no MAPA?<br />
+      <input type="radio" name="q1" value="sim" required> Sim
+      <input type="radio" name="q1" value="nao"> Não
+    </div>
+    <div class="question">
+      2. Possui projeto técnico previamente aprovado pelo MAPA?<br />
+      <input type="radio" name="q2" value="sim" required> Sim
+      <input type="radio" name="q2" value="nao"> Não
+    </div>
+    <div class="question">
+      3. Executa ações de assistência técnica e extensão rural?<br />
+      <input type="radio" name="q3" value="sim" required> Sim
+      <input type="radio" name="q3" value="nao"> Não
+    </div>
+    <div class="question">
+      4. Adquire leite de produtores rurais regularmente registrados?<br />
+      <input type="radio" name="q4" value="sim" required> Sim
+      <input type="radio" name="q4" value="nao"> Não
+    </div>
+    <div class="question">
+      5. Está em dia com as obrigações fiscais e ambientais?<br />
+      <input type="radio" name="q5" value="sim" required> Sim
+      <input type="radio" name="q5" value="nao"> Não
+    </div>
+    <div class="question">
+      6. Possui controle de rastreabilidade da produção de leite?<br />
+      <input type="radio" name="q6" value="sim" required> Sim
+      <input type="radio" name="q6" value="nao"> Não
+    </div>
+    <div class="question">
+      7. Apresenta relatórios periódicos ao MAPA?<br />
+      <input type="radio" name="q7" value="sim" required> Sim
+      <input type="radio" name="q7" value="nao"> Não
+    </div>
+    <div class="question">
+      8. Possui contrato formal com os produtores assistidos?<br />
+      <input type="radio" name="q8" value="sim" required> Sim
+      <input type="radio" name="q8" value="nao"> Não
+    </div>
+
+    <button type="submit">Verificar Elegibilidade</button>
+  </form>
+
+  <div id="resultado" class="result" style="display: none;"></div>
+
+  <script>
+    document.getElementById('checklistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const respostas = Array.from(document.querySelectorAll('input[type=radio]:checked')).map(el => el.value);
+      const resultadoDiv = document.getElementById('resultado');
+
+      if (respostas.length < 8) {
+        resultadoDiv.textContent = 'Por favor, responda todas as perguntas.';
+        resultadoDiv.className = 'result fail';
+        resultadoDiv.style.display = 'block';
+        return;
+      }
+
+      const elegivel = respostas.every(resp => resp === 'sim');
+
+      if (elegivel) {
+        resultadoDiv.textContent = '🎉 Parabéns! Você está apto a pleitear o Programa Mais Leite Saudável e pode obter até 50% de desconto.';
+        resultadoDiv.className = 'result success';
+      } else {
+        resultadoDiv.textContent = '⚠️ Você ainda não está apto a pleitear o Programa Mais Leite Saudável. Procure sua assessoria jurídica tributária.';
+        resultadoDiv.className = 'result fail';
+      }
+
+      resultadoDiv.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
